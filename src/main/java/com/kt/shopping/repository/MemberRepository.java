@@ -54,7 +54,7 @@ public class MemberRepository {
 			from member
 			where loginid = ?;
 			""";
-		return jdbcTemplate.queryForObject(selectSql,new BeanPropertyRowMapper<>(MemberReadResponse.class),id );
+		return jdbcTemplate.queryForObject(selectSql,new MemberRowMapper(),id );
 	}
 	public List<MemberReadResponse> readAll(){
 		String selectSqlAll = """
