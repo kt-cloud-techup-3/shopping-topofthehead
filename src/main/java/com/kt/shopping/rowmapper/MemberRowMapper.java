@@ -1,4 +1,4 @@
-package com.kt.shopping.RowMapper;
+package com.kt.shopping.rowmapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -29,28 +29,25 @@ public class MemberController {
 		// 계정생성
 		memberservice.createFromH2(request);
 	}
-
 	@PutMapping("/members/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public void updateMember(@PathVariable int id, @RequestBody MemberUpdateRequest request) {
 		// loginid에 해당하는 계정의 이름, 생년월일 업데이트
 		memberservice.updateFromH2(id, request);
 	}
-
 	@DeleteMapping("/members/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public void deleteMember(@PathVariable int id) {
 		// loginid에 해당하는 계정 삭제
 		memberservice.deleteFromH2(id);
 	}
-
 	@GetMapping("/members/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public MemberReadResponse getMember(@PathVariable int id){
 		// loginid에 해당하는 계정  가져오기
 		return memberservice.getDataFromH2(id);
 	}
-	@GetMapping("/members/")
+	@GetMapping("/members")
 	@ResponseStatus(HttpStatus.OK)
 	public List<MemberReadResponse> getMember(){
 		// 모든 계정  가져오기
