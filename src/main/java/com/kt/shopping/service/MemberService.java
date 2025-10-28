@@ -10,12 +10,13 @@ import com.kt.shopping.dto.MemberReadResponse;
 import com.kt.shopping.dto.MemberUpdateRequest;
 import com.kt.shopping.repository.MemberRepository;
 
+import lombok.RequiredArgsConstructor;
+
+
+@RequiredArgsConstructor
 @Service
 public class MemberService {
 	private final MemberRepository memberRepository;
-	public MemberService(MemberRepository memberRepository) {
-		this.memberRepository = memberRepository;
-	}
 	// 계정 생성
 	public void createMember(MemberCreateRequest request){
 		Member member = new Member(

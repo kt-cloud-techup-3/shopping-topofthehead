@@ -11,12 +11,12 @@ import com.kt.shopping.rowmapper.MemberRowMapper;
 import com.kt.shopping.domain.Member;
 import com.kt.shopping.dto.MemberReadResponse;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Repository
 public class MemberRepository {
 	private final JdbcTemplate jdbcTemplate;
-	public MemberRepository(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
-	}
 	public void save(Member member){
 		// 서비스에서 DTO를 비즈니스모델로 바꾼 후 전달
 		String insertSql = """

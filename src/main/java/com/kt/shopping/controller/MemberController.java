@@ -17,39 +17,39 @@ import com.kt.shopping.dto.MemberReadResponse;
 import com.kt.shopping.dto.MemberUpdateRequest;
 import com.kt.shopping.service.MemberService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 public class MemberController {
 	private final MemberService memberservice;
-	public MemberController(MemberService memberservice){
-		this.memberservice = memberservice;
-	}
 	@PostMapping("/members")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void createMemberApi(@RequestBody MemberCreateRequest request) {
+	public void create(@RequestBody MemberCreateRequest request) {
 		// 계정생성
 		memberservice.createMember(request);
 	}
 	@PutMapping("/members/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public void updateMemberApi(@PathVariable int id, @RequestBody MemberUpdateRequest request) {
+	public void update(@PathVariable int id, @RequestBody MemberUpdateRequest request) {
 		// loginid에 해당하는 계정의 이름, 생년월일 업데이트
 		memberservice.updateMember(id, request);
 	}
 	@DeleteMapping("/members/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public void deleteMemberApi(@PathVariable int id) {
+	public void delete(@PathVariable int id) {
 		// loginid에 해당하는 계정 삭제
 		memberservice.deleteMember(id);
 	}
 	@GetMapping("/members/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public MemberReadResponse getMemberApi(@PathVariable int id){
+	public MemberReadResponse getMember(@PathVariable int id){
 		// loginid에 해당하는 계정  가져오기
 		return memberservice.getMember(id);
 	}
 	@GetMapping("/members")
 	@ResponseStatus(HttpStatus.OK)
-	public List<MemberReadResponse> getAllMembersApi(){
+	public List<MemberReadResponse> getAllMembers(){
 		// 모든 계정  가져오기
 		return memberservice.getAllMembers();
 	}
