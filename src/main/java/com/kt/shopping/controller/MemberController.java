@@ -25,32 +25,32 @@ public class MemberController {
 	}
 	@PostMapping("/members")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void createMember(@RequestBody MemberCreateRequest request) {
+	public void createMemberApi(@RequestBody MemberCreateRequest request) {
 		// 계정생성
-		memberservice.createFromH2(request);
+		memberservice.createMember(request);
 	}
 	@PutMapping("/members/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public void updateMember(@PathVariable int id, @RequestBody MemberUpdateRequest request) {
+	public void updateMemberApi(@PathVariable int id, @RequestBody MemberUpdateRequest request) {
 		// loginid에 해당하는 계정의 이름, 생년월일 업데이트
-		memberservice.updateFromH2(id, request);
+		memberservice.updateMember(id, request);
 	}
 	@DeleteMapping("/members/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public void deleteMember(@PathVariable int id) {
+	public void deleteMemberApi(@PathVariable int id) {
 		// loginid에 해당하는 계정 삭제
-		memberservice.deleteFromH2(id);
+		memberservice.deleteMember(id);
 	}
 	@GetMapping("/members/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public MemberReadResponse getMember(@PathVariable int id){
+	public MemberReadResponse getMemberApi(@PathVariable int id){
 		// loginid에 해당하는 계정  가져오기
-		return memberservice.getDataFromH2(id);
+		return memberservice.getMember(id);
 	}
 	@GetMapping("/members")
 	@ResponseStatus(HttpStatus.OK)
-	public List<MemberReadResponse> getMember(){
+	public List<MemberReadResponse> getAllMembersApi(){
 		// 모든 계정  가져오기
-		return memberservice.getAllDataFromH2();
+		return memberservice.getAllMembers();
 	}
 }

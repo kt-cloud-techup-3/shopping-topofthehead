@@ -6,9 +6,9 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kt.shopping.dto.MemberUpdateRequest;
 import com.kt.shopping.rowmapper.MemberRowMapper;
 import com.kt.shopping.domain.Member;
-import com.kt.shopping.domain.UpdateMember;
 import com.kt.shopping.dto.MemberReadResponse;
 
 @Repository
@@ -29,7 +29,7 @@ public class MemberRepository {
 			member.getBirtday()
 			);
 	}
-	public void update(int loginId, UpdateMember member){
+	public void update(int loginId, MemberUpdateRequest member){
 		String updateSql = """
 				update member
 				set name = ?,

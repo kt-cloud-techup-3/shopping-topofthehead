@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.kt.shopping.domain.UpdateMember;
 import com.kt.shopping.dto.MemberCreateRequest;
 import com.kt.shopping.domain.Member;
 import com.kt.shopping.dto.MemberReadResponse;
@@ -18,7 +17,7 @@ public class MemberService {
 		this.memberRepository = memberRepository;
 	}
 	// 계정 생성
-	public void createFromH2(MemberCreateRequest request){
+	public void createMember(MemberCreateRequest request){
 		Member member = new Member(
 			request.loginId(),
 			request.password(),
@@ -28,21 +27,17 @@ public class MemberService {
 		memberRepository.save(member);
 	}
 	// loginid에 해당하는 계정의 이름, 생년월일 업데이트
-	public void updateFromH2(int id,MemberUpdateRequest request){
-		UpdateMember um = new UpdateMember(
-			request.name(),
-			request.birthday()
-		);
-		memberRepository.update(id, um);
+	public void updateMember(int id,MemberUpdateRequest request){
+		memberRepository.update(id, request);
 	}
 	// loginid에 해당하는 계정 삭제
-	public void deleteFromH2(int id){
+	public void deleteMember(int id){
 		memberRepository.delete(id);
 	}
-	public MemberReadResponse getDataFromH2(int id){
+	public MemberReadResponse getMember(int id){
 		return memberRepository.read(id);
 	}
-	public List<MemberReadResponse> getAllDataFromH2(){
+	public List<MemberReadResponse> getAllMembers(){
 		return memberRepository.readAll();
 	}
 }
