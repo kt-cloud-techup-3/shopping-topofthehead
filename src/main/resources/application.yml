@@ -1,6 +1,9 @@
 spring:
   application:
     name: shopping
+  sql:
+    init:
+      mode: always
   h2:
     console:
       enabled: true
@@ -9,6 +12,3 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
-
-
-

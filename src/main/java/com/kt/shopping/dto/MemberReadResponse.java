@@ -1,4 +1,4 @@
-package com.kt.shopping.domain;
+package com.kt.shopping.dto;
 
 import java.time.LocalDate;
 
@@ -8,11 +8,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
-	private int loginId;
-	private String password;
+public class MemberReadResponse {
 	private String name;
-	private LocalDate birtday;
+	private LocalDate birthday;
 }
