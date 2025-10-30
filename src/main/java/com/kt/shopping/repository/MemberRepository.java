@@ -26,7 +26,7 @@ public class MemberRepository {
 			member.getLoginId(),
 			member.getPassword(),
 			member.getName(),
-			member.getBirtday()
+			member.getBirthday()
 			);
 	}
 	public void update(int loginId, MemberUpdateRequest member){
@@ -62,5 +62,11 @@ public class MemberRepository {
 			from member;
 			""";
 		return jdbcTemplate.query(selectSqlAll,new MemberRowMapper());
+	}
+	public Long getMaxId(){
+		String getMaxSQL = """
+			select MAX(id) FROM MEMBER;
+			""";
+		return jdbcTemplate.queryForObject(getMaxSQL,Long.class);
 	}
 }
