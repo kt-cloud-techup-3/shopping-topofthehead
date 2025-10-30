@@ -63,4 +63,10 @@ public class MemberRepository {
 			""";
 		return jdbcTemplate.query(selectSqlAll,new MemberRowMapper());
 	}
+	public Long getMaxId(){
+		String getMaxSQL = """
+			select MAX(id) FROM MEMBER;
+			""";
+		return jdbcTemplate.queryForObject(getMaxSQL,Long.class);
+	}
 }
