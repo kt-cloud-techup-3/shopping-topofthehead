@@ -17,6 +17,7 @@ import com.kt.shopping.dto.MemberReadResponse;
 import com.kt.shopping.dto.MemberUpdateRequest;
 import com.kt.shopping.service.MemberService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -25,7 +26,7 @@ public class MemberController {
 	private final MemberService memberservice;
 	@PostMapping("/members")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void create(@RequestBody MemberCreateRequest request) {
+	public void create(@Valid @RequestBody MemberCreateRequest request) {
 		// 계정생성
 		memberservice.createMember(request);
 	}
