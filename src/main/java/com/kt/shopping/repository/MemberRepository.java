@@ -26,7 +26,7 @@ public class MemberRepository {
 			member.getLoginId(),
 			member.getPassword(),
 			member.getName(),
-			member.getBirtday()
+			member.getBirthday()
 			);
 	}
 	public void update(int loginId, MemberUpdateRequest member){
