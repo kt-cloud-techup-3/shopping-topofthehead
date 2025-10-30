@@ -1,6 +1,7 @@
 package com.kt.shopping.domain;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,5 +14,10 @@ public class Member {
 	private int loginId;
 	private String password;
 	private String name;
-	private LocalDate birtday;
+	private String email;
+	private String mobile;
+	private Gender gender;
+	private LocalDate birthday;
+	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
 }
