@@ -17,15 +17,24 @@ import com.kt.shopping.dto.MemberReadResponse;
 import com.kt.shopping.dto.MemberUpdateRequest;
 import com.kt.shopping.service.MemberService;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+@Tag(name="멤버컨트롤러")
 @RestController
 @RequiredArgsConstructor
 public class MemberController {
 	private final MemberService memberservice;
+	@ApiResponses(value = {
+		@ApiResponse(responseCode="400", description = "유효성 검사 실패"),
+		@ApiResponse(responseCode = "500", description = "서버 에러")
+	})
 	@PostMapping("/members")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void create(@RequestBody MemberCreateRequest request) {
+	public void create(@Valid @RequestBody MemberCreateRequest request) {
 		// 계정생성
 		memberservice.createMember(request);
 	}

@@ -1,5 +1,6 @@
 package com.kt.shopping.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -19,11 +20,17 @@ public class MemberService {
 	private final MemberRepository memberRepository;
 	// 계정 생성
 	public void createMember(MemberCreateRequest request){
-		Member member = new Member(
+		var member = new Member(
+			memberRepository.getMaxId()+1, // 1씩 더하면서 PK 보장
 			request.loginId(),
 			request.password(),
 			request.name(),
-			request.birthday()
+			request.email(),
+			request.mobile(),
+			request.gender(),
+			request.birthday(),
+			LocalDateTime.now(),
+			LocalDateTime.now()
 		);
 		memberRepository.save(member);
 	}
@@ -41,4 +48,6 @@ public class MemberService {
 	public List<MemberReadResponse> getAllMembers(){
 		return memberRepository.readAll();
 	}
+
+	// TODO : ID 중복검사 만들기
 }
