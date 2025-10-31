@@ -2,6 +2,8 @@ package com.kt.shopping.controller;
 
 import java.util.List;
 
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import com.kt.shopping.dto.MemberCreateRequest;
 import com.kt.shopping.dto.MemberReadResponse;
@@ -52,9 +56,17 @@ public class MemberController {
 	}
 	@GetMapping("/members/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public MemberReadResponse getMember(@PathVariable int id){
+	public EntityModel<MemberReadResponse> getMember(@PathVariable int id){
 		// loginid에 해당하는 계정  가져오기
-		return memberservice.getMember(id);
+		MemberReadResponse memberreadresponse = memberservice.getMember(id);
+		// HATEOAS 구현을 위한 EntityModel 생성
+		EntityModel<MemberReadResponse> entityModel = EntityModel.of(memberreadresponse);
+		// 특정 Controller로 접근하는 하이퍼링크를 포함하는 링크객체 생성
+		WebMvcLinkBuilder linkToMember1 = linkTo(methodOn(MemberController.class).getAllMembers());
+		// EntityModel에 링크객체 추가
+		entityModel.add(linkToMember1.withRel("모든 멤버 조회"));
+		// 계정과 하이퍼링크를 포함하는 EntityModel 반환
+		return entityModel;
 	}
 	@GetMapping("/members")
 	@ResponseStatus(HttpStatus.OK)
