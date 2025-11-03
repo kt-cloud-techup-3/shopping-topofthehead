@@ -93,7 +93,11 @@ public class MemberRepository {
 	}
 	public boolean existsByLoginId(String loginId){
 		// Reference Type인 경우 null을 포함가능 → Primitive Type인 boolean type을 사용
-		var sql = "SELECT EXISTS (SELECT id from member where loginId = ?)";
+		var sql = "SELECT EXISTS (SELECT id from member where loginId = ?);";
 		return Boolean.TRUE.equals(jdbcTemplate.update(sql,Boolean.class,loginId));
+	}
+	public void updatePassword(int id, String password){
+		var sql = "UPDATE MEMBER SET password = ? WHERE id = ?;";
+		jdbcTemplate.update(sql,id,password);
 	}
 }
