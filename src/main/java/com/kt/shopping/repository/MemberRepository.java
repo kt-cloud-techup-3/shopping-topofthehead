@@ -91,4 +91,9 @@ public class MemberRepository {
 		var maxId = jdbcTemplate.queryForObject(getMaxSQL,Long.class);
 		return  (maxId == null)? 0L : maxId;
 	}
+	public boolean existsByLoginId(String loginId){
+		// Reference Type인 경우 null을 포함가능 → Primitive Type인 boolean type을 사용
+		var sql = "SELECT EXISTS (SELECT id from member where loginId = ?)";
+		return Boolean.TRUE.equals(jdbcTemplate.update(sql,Boolean.class,loginId));
+	}
 }

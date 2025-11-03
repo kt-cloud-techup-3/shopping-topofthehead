@@ -49,5 +49,9 @@ public class MemberService {
 		return memberRepository.readAll();
 	}
 
+	public boolean isDuplicatedLoginId(String loginId){
+		return memberRepository.existsByLoginId(loginId);
+	}
+
 	// TODO : ID 중복검사 만들기
 }
