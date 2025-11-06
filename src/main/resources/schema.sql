@@ -9,6 +9,6 @@ create table MEMBER
     mobile varchar(255) not null,
     email varchar(255) not null,
     gender enum('MALE', 'FEMALE'),
-    createdAt timestamp   not null,
-    updatedAt timestamp   not null
+    createdAt timestamp  not null,
+    updatedAt timestamp  not null
 );

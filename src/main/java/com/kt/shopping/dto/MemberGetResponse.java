@@ -2,13 +2,13 @@ package com.kt.shopping.dto;
 
 import java.time.LocalDate;
 
-import com.kt.shopping.domain.Gender;
+import com.kt.shopping.domain.member.Gender;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-public record MemberReadResponse (
+public record MemberGetResponse(
 	@NotBlank
 	String name,
 	@NotBlank
