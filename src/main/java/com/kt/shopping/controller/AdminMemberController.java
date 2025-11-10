@@ -1,5 +1,10 @@
 package com.kt.shopping.controller;
 
+import java.util.UUID;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kt.shopping.dto.CustomPage;
+import com.kt.shopping.domain.member.MemberEntity;
 import com.kt.shopping.dto.MemberGetResponse;
 import com.kt.shopping.dto.MemberUpdateRequest;
 import com.kt.shopping.service.MemberService;
@@ -27,39 +32,40 @@ public class AdminMemberController {
 	private final MemberService memberservice;
 
 	// 유저 리스트 조회
-	@GetMapping
 	// 실무에서 defaultValue=""는 테스트용 초기값 정의용도로 사용
 	// 1번 페이지부터 시작하므로 1로 설정
+	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public CustomPage search(
+	public Page<MemberEntity> search(
 		@RequestParam(defaultValue = "10") int size,
 		@RequestParam(defaultValue = "1") int page,
 		@RequestParam(required = false) String keyword
 	){
-		return memberservice.search(page,size,keyword);
+		Pageable pageable = PageRequest.of(page-1 , size);
+		return memberservice.searchAll(pageable, keyword);
 	}
 
 	// 유저 상세 조회
-	@GetMapping("/{id}")
+	@GetMapping("/{loginId}")
 	@ResponseStatus(HttpStatus.OK)
-	public MemberGetResponse detail(@PathVariable int id){
-		return memberservice.getMember(id);
+	public MemberGetResponse detail(@PathVariable String loginId){
+		return memberservice.getMember(loginId);
 	}
 
 	// 유저 정보 수정
-	@PutMapping("/{id}")
+	@PutMapping("/{loginId}")
 	@ResponseStatus(HttpStatus.OK)
-	public void update(@PathVariable int id, @RequestBody MemberUpdateRequest request) {
+	public void update(@PathVariable String loginId, @RequestBody MemberUpdateRequest request) {
 		// loginid에 해당하는 계정의 이름, 생년월일 업데이트
-		memberservice.updateMember(id, request);
+		memberservice.updateMember(loginId, request);
 	}
 
 	// 유저 삭제
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/{loginId}")
 	@ResponseStatus(HttpStatus.OK)
-	public void delete(@PathVariable int id) {
+	public void delete(@PathVariable String loginId) {
 		// loginid에 해당하는 계정 삭제
-		memberservice.deleteMember(id);
+		memberservice.deleteMember(loginId);
 	}
 
 	// 유저 비밀번호 초기화
