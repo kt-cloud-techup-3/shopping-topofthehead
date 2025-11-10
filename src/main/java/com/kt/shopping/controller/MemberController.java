@@ -1,6 +1,7 @@
 package com.kt.shopping.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -18,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
+import com.kt.shopping.domain.member.MemberEntity;
 import com.kt.shopping.dto.MemberCreateRequest;
 import com.kt.shopping.dto.MemberGetResponse;
-import com.kt.shopping.dto.MemberUpdateRequest;
 import com.kt.shopping.dto.UserUpdatePasswordRequest;
 import com.kt.shopping.service.MemberService;
 
@@ -49,11 +50,11 @@ public class MemberController {
 		memberservice.createMember(request);
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/{loginId}")
 	@ResponseStatus(HttpStatus.OK)
-	public EntityModel<MemberGetResponse> getMember(@PathVariable int id){
+	public EntityModel<MemberGetResponse> getMember(@PathVariable String loginId){
 		// loginid에 해당하는 계정  가져오기
-		MemberGetResponse memberreadresponse = memberservice.getMember(id);
+		MemberGetResponse memberreadresponse = memberservice.getMember(loginId);
 		// HATEOAS 구현을 위한 EntityModel 생성
 		EntityModel<MemberGetResponse> entityModel = EntityModel.of(memberreadresponse);
 		// 특정 Controller로 접근하는 하이퍼링크를 포함하는 링크객체 생성
@@ -65,7 +66,7 @@ public class MemberController {
 	}
 	@GetMapping("/")
 	@ResponseStatus(HttpStatus.OK)
-	public List<MemberGetResponse> getAllMembers(){
+	public List<MemberEntity> getAllMembers(){
 		// 모든 계정  가져오기
 		return memberservice.getAllMembers();
 	}
@@ -77,22 +78,22 @@ public class MemberController {
 	// Query String이 꼭 필요하지 않는경우 @RequestParam(required = false) 설정
 	@GetMapping("/duplicate-login-id")
 	@ResponseStatus(HttpStatus.OK)
-	public Boolean isDuplicateLoginId(@RequestParam(required = false) String id){
+	public Boolean isDuplicateLoginId(@RequestParam(required = false) String loginId){
 		// Reference Type인 경우 null을 포함가능 → primitive인 boolean이 아닌 RefereceType인 Boolean 사용
 		// 1화 29분 : Generics 사용 예정 및 Generics는 Reference Type만 사용가능하므로 사용
-		return memberservice.isDuplicatedId(Integer.parseInt(id));
+		return memberservice.isDuplicatedId(loginId);
 	}
 
 
 	// 변경할 id를 path에 전달 및 RequestBody에 현재 비밀번호와 변경할 비밀번호를 함께 전달하여 변경 수행
-	@PutMapping("/{id}/update-password")
+	@PutMapping("/{loginId}/update-password")
 	// 1. MessageBody에 id를 넣는다
 	// 2. uri에 id값을 넣는다. /users/{id}/update-password
 	// 3. 인증/인가 객체에서 id값을 꺼낸다 : 가장 권고하나 배우지않은상태
 	public void updatePassword(@RequestBody @Valid UserUpdatePasswordRequest request,
-		@PathVariable Integer id) {
+		@PathVariable String loginId) {
 		// @RequestBody로 HTTPRequestBody와 mapping된 DTO에서 데이터 가져옴
-		memberservice.changePassword(id,request.oldpassword(),request.newpassword());
+		memberservice.changePassword(loginId,request.oldpassword(),request.newpassword());
 	}
 
 }

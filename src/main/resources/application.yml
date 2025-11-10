@@ -1,13 +1,21 @@
 spring:
   application:
     name: shopping
-  h2:
-    console:
-      enabled: true
-  sql:
-    init:
-      mode: always
   datasource:
-    url: jdbc:h2:~/test
-    username: sa
-    password:
+    url: jdbc:mysql://localhost:3306/testdb
+    username: root
+    password: ${PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+        jdbc:
+          time_zone: Asia/Seoul
+    show_sql: true
+# 해당 환경변수는 비밀번호이므로 yml에 저장하면 안되고
+# 따로 Edit Configuration - Environment Variable에서 PASSWORD:1234로 지정
+PASSWORD: 1234
