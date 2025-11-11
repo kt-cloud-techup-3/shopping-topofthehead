@@ -9,9 +9,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import com.kt.shopping.common.CustomException;
+import com.kt.shopping.common.ErrorCode;
 import com.kt.shopping.domain.member.MemberEntity;
 
-public interface MemberRepository extends JpaRepository<MemberEntity, UUID> {
+public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
+	default MemberEntity findByIdOrThrow(Long id, ErrorCode errorCode) {
+		return findById(id).orElseThrow(()-> new CustomException(errorCode));
+	}
 	List<MemberEntity> findAll();
 	Optional<MemberEntity> findByLoginId(String loginId);
 	void deleteByLoginId(String loginId);

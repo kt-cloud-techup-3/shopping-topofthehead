@@ -1,19 +1,13 @@
 package com.kt.shopping.domain.product;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import com.kt.shopping.common.BaseEntity;
 import com.kt.shopping.domain.orderproduct.OrderProductEntity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Enumerated;
@@ -29,14 +23,44 @@ public class ProductEntity extends BaseEntity {
 	private Long price;
 	private Long stock;
 	@Enumerated(EnumType.STRING)
-	private ProductStatus status;
-
-	public ProductEntity(String name, Long price, Long stock, ProductStatus status, LocalDateTime createdAt, LocalDateTime updatedAt) {
+	// 상품 초기설정
+	private ProductStatus status = ProductStatus.ACTIVATIVED;
+	@OneToMany(mappedBy="product")
+	private List<OrderProductEntity> orderProductEntities = new ArrayList<>();
+	public ProductEntity(String name, Long price, Long stock) {
 		this.name = name;
 		this.price = price;
 		this.stock = stock;
-		this.status = status;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
+	}
+	// Entity 정보 수정하는 setter -> 추후 DirtyChecking에 의해 변경사항 감지 후
+	// DB Table에 반영
+	public void update(String name, Long price, Long stock){
+		this.name = name;
+		this.price = price;
+		this.stock = stock;
+	}
+	// 상태변경 : 품절
+	public void soldOut(){
+		this.status = ProductStatus.SOLD_OUT;
+	}
+	// 상태변경 : 판매중지
+	public void inActivate(){
+		this.status = ProductStatus.IN_ACTIVATED;
+	}
+	// 상태변경 : 판매중
+	public void Acivate(){
+		this.status = ProductStatus.ACTIVATIVED;
+	}
+	// 상태변경 : 삭제
+	// 논리적으로 삭제된 상태로 지정하며 실제 DB Entity는 삭제되지 않음.
+	public void delete(){
+		this.status = ProductStatus.DELETED;
+	}
+	// 재고수량 변경
+	public void decreaseStock(Long quantity){
+		this.stock -= quantity;
+	}
+	public void increaseStock(Long quantity){
+		this.stock += quantity;
 	}
 }

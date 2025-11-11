@@ -1,4 +1,4 @@
-package com.kt.shopping.dto;
+package com.kt.shopping.dto.member;
 
 import java.time.LocalDate;
 
