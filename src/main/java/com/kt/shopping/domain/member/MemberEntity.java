@@ -2,23 +2,20 @@ package com.kt.shopping.domain.member;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
 import jakarta.persistence.Enumerated;
 
 import com.kt.shopping.common.BaseEntity;
 import com.kt.shopping.domain.order.OrderEntity;
-import com.kt.shopping.dto.MemberUpdateRequest;
+import com.kt.shopping.dto.member.MemberUpdateRequest;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -39,7 +36,7 @@ import lombok.NoArgsConstructor;
 		private LocalDate birthday;
 
 		@OneToMany(mappedBy="member")
-		private List<OrderEntity> orders;
+		private List<OrderEntity> orders = new ArrayList<>();
 
 	// Entity의 @Id Field는 @GeneratedValue에 의해 자동할당되므로 생성자로 할당하지않고 Null로 설정
 	public MemberEntity(String loginId, String password, String name, String email, String mobile, Gender gender,
@@ -51,8 +48,6 @@ import lombok.NoArgsConstructor;
 		this.mobile = mobile;
 		this.gender = gender;
 		this.birthday = birthday;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
 	}
 	public void updatePassword(String password){
 		this.password = password;

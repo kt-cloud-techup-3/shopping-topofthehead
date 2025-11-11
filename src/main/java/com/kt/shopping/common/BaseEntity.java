@@ -12,8 +12,8 @@ import jakarta.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class BaseEntity {
 	@Id
-	@GeneratedValue(strategy= GenerationType.UUID)
-	protected UUID id;
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	protected Long id;
 	@Column(name="CREATEDAT")
 	protected LocalDateTime createdAt;
 	@Column(name="UPDATEDAT")

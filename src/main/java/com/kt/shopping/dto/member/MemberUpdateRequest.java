@@ -1,4 +1,4 @@
-package com.kt.shopping.dto;
+package com.kt.shopping.dto.member;
 
 import java.time.LocalDate;
 
@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-public record MemberGetResponse(
+public record MemberUpdateRequest(
 	@NotBlank
 	String name,
 	@NotBlank
@@ -21,4 +21,4 @@ public record MemberGetResponse(
 	Gender gender,
 	@NotNull
 	LocalDate birthday
-){ }
+) { }
