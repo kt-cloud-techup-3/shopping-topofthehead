@@ -17,45 +17,47 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 	private final ProductRepository productRepository;
+	@Override
 	public void create(String name, Long price, Long quantity) {
 		productRepository.save(
 			new ProductEntity(name, price, quantity)
 		);
 	}
+	@Override
 	public void update(Long id, String name, Long price, Long quantity){
 		var product = productRepository.findByIdOrThrowNotFound(id);
 		product.update(name, price, quantity);
 	}
 	// 상태변경
+	@Override
 	public void soldOut(Long id){
-		var product = productRepository.findById(id)
-			.orElseThrow(()-> new IllegalArgumentException("존재하지 않는 상품입니다."));
+		var product = productRepository.findByIdOrThrowNotFound(id);
 		product.soldOut();
 	}
-
+	@Override
 	public void inActivate(Long id){
-		var product = productRepository.findById(id)
-			.orElseThrow(()-> new IllegalArgumentException("존재하지 않는 상품입니다."));
+		var product = productRepository.findByIdOrThrowNotFound(id);
 		product.inActivate();
 	}
+	@Override
 	public void Activate(Long id) {
-		var product = productRepository.findById(id)
-			.orElseThrow(()-> new IllegalArgumentException("존재하지 않는 상품입니다."));
+		var product = productRepository.findByIdOrThrowNotFound(id);
 		product.Acivate();
 	}
+	@Override
 	public void delete(Long id) {
 		var product = productRepository.findByIdOrThrowNotFound(id);
 		product.delete();
 	}
 	// 재고변경
+	@Override
 	public void decreaseStock(Long id, Long quantity) {
-		var product = productRepository.findById(id)
-			.orElseThrow(()-> new CustomException(ErrorCode.NOT_FOUND_PRODUCT));
+		var product = productRepository.findByIdOrThrowNotFound(id);
 		product.decreaseStock(quantity);
 	}
+	@Override
 	public void increaseStock(Long id, Long quantity) {
-		var product = productRepository.findById(id)
-			.orElseThrow(()-> new IllegalArgumentException("존재하지 않는 상품입니다."));
+		var product = productRepository.findByIdOrThrowNotFound(id);
 		product.increaseStock(quantity);
 	}
 }

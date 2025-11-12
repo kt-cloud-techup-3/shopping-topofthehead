@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import com.kt.shopping.domain.member.Gender;
 import com.kt.shopping.domain.member.MemberEntity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -12,7 +13,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 public interface MemberResponse {
-	record MemberGetResponse(
+
+	@Schema(name = "MemberResponse.Details")
+	record Details(
 		@NotBlank
 		String name,
 		@NotBlank
@@ -26,18 +29,16 @@ public interface MemberResponse {
 		@NotNull
 		LocalDate birthday
 	){ }
-	record Details(
-		String loginId,
-		String name,
-		String email
-	){
+
 		// 정적 팩토리 메서드
-		public static Details of(MemberEntity memberEntity){
+		static Details of(MemberEntity memberEntity){
 			return new Details(
-				memberEntity.getLoginId(),
 				memberEntity.getName(),
-				memberEntity.getEmail()
+				memberEntity.getEmail(),
+				memberEntity.getMobile(),
+				memberEntity.getGender(),
+				memberEntity.getBirthday()
 			);
 		}
 	}
-}
+
