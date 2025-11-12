@@ -14,7 +14,7 @@ import com.kt.shopping.common.PreValidCondition;
 import com.kt.shopping.domain.member.MemberEntity;
 import com.kt.shopping.dto.member.MemberRequest;
 import com.kt.shopping.dto.member.MemberResponse;
-import com.kt.shopping.repository.MemberRepository;
+import com.kt.shopping.repository.member.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 

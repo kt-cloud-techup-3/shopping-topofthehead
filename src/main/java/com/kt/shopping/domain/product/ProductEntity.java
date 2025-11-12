@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kt.shopping.common.BaseEntity;
+import com.kt.shopping.common.PreValidCondition;
 import com.kt.shopping.domain.orderproduct.OrderProductEntity;
 
 import jakarta.persistence.Entity;
@@ -62,5 +63,13 @@ public class ProductEntity extends BaseEntity {
 	}
 	public void increaseStock(Long quantity){
 		this.stock += quantity;
+	}
+	public boolean canProvide(Long quantity){
+		return stock - quantity > 0;
+	}
+	// OrderProduct 생성 시 수작업으로 양방향 관계에 있는 Entity의
+	// @OneToMany가 선언된 List 필드에 추가해야한다.
+	public void mapToOrderProduct(OrderProductEntity orderProductEntity){
+		orderProductEntities.add(orderProductEntity);
 	}
 }

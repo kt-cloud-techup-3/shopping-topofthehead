@@ -1,14 +1,10 @@
 package com.kt.shopping.service.product;
 
-import java.util.UUID;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kt.shopping.common.CustomException;
-import com.kt.shopping.common.ErrorCode;
 import com.kt.shopping.domain.product.ProductEntity;
-import com.kt.shopping.repository.ProductRepository;
+import com.kt.shopping.repository.product.ProductRepository;
 
 import lombok.RequiredArgsConstructor;
 
