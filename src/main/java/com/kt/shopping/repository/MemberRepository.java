@@ -14,24 +14,25 @@ import com.kt.shopping.common.ErrorCode;
 import com.kt.shopping.domain.member.MemberEntity;
 
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
-	default MemberEntity findByIdOrThrow(Long id, ErrorCode errorCode) {
-		return findById(id).orElseThrow(()-> new CustomException(errorCode));
+	// 에러 발생
+	default MemberEntity findMemberByIdOrThrowNotFound(Long id){
+		return findById(id).orElseThrow((()-> new CustomException(ErrorCode.NOT_FOUND_USER)));
 	}
 	List<MemberEntity> findAll();
-	Optional<MemberEntity> findByLoginId(String loginId);
-	void deleteByLoginId(String loginId);
-	// Query Method 방식
-	Boolean existsByLoginId(String loginId);
+
+	Optional<MemberEntity> findById(Long id);
+
 	// JPQL 방식
 	@Query("""
-		SELECT EXISTS ( SELECT m FROM MemberEntity m WHERE m.loginId = ?1 )
+		SELECT EXISTS ( SELECT m FROM MemberEntity m WHERE m.id = ?1 )
 	""")
-	Boolean existsByLoginIdByJPQL(String loginId);
+	Boolean existsByIdByJPQL(String id);
+
 	// Native SQL 방식
 	@Query(value = """
-		SELECT EXISTS (SELECT * FROM Member WHERE loginId = ?1);
+		SELECT EXISTS (SELECT * FROM Member WHERE id = ?1);
 	""",nativeQuery = true)
-	Boolean existsByLoginIdByNativeSQL(String loginId);
+	Boolean existsByIdByNativeSQL(String id);
 
 	Page<MemberEntity> findAllByNameContaining(String name, Pageable pageable);
 }

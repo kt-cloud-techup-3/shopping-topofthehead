@@ -18,8 +18,8 @@ import com.kt.shopping.common.ApiResult;
 import com.kt.shopping.common.Paging;
 import com.kt.shopping.common.SwaggerSupporter;
 import com.kt.shopping.domain.member.MemberEntity;
+import com.kt.shopping.dto.member.MemberRequest;
 import com.kt.shopping.dto.member.MemberResponse;
-import com.kt.shopping.dto.member.MemberUpdateRequest;
 import com.kt.shopping.service.member.MemberServiceImpl;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -46,27 +46,27 @@ public class AdminMemberController extends SwaggerSupporter {
 	}
 
 	// 유저 상세 조회
-	@GetMapping("/{loginId}")
+	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public MemberResponse.MemberGetResponse detail(@PathVariable String loginId){
-		return memberservice.getMember(loginId);
+	public MemberResponse.Details detail(@PathVariable Long id){
+		return memberservice.getMember(id);
 	}
 
 	// 유저 정보 수정
-	@PutMapping("/{loginId}")
+	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ApiResult<Void> update(@PathVariable String loginId, @RequestBody MemberUpdateRequest request) {
+	public ApiResult<Void> update(@PathVariable Long id, @RequestBody MemberRequest.Update request) {
 		// loginid에 해당하는 계정의 이름, 생년월일 업데이트
-		memberservice.updateMember(loginId, request);
+		memberservice.updateMember(id, request);
 		return ApiResult.ok();
 	}
 
 	// 유저 삭제
-	@DeleteMapping("/{loginId}")
+	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ApiResult<Void> delete(@PathVariable String loginId) {
+	public ApiResult<Void> delete(@PathVariable Long id) {
 		// loginid에 해당하는 계정 삭제
-		memberservice.deleteMember(loginId);
+		memberservice.deleteMember(id);
 		return ApiResult.ok();
 	}
 

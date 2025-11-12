@@ -9,7 +9,7 @@ import jakarta.persistence.Enumerated;
 
 import com.kt.shopping.common.BaseEntity;
 import com.kt.shopping.domain.order.OrderEntity;
-import com.kt.shopping.dto.member.MemberUpdateRequest;
+import com.kt.shopping.dto.member.MemberRequest;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -53,7 +53,7 @@ import lombok.NoArgsConstructor;
 		this.password = password;
 		updatedAt = LocalDateTime.now();
 	}
-	public void updateContent(MemberUpdateRequest member){
+	public void updateContent(MemberRequest.Update member){
 			this.name = member.name();
 			this.email = member.email();
 			this.mobile = member.mobile();

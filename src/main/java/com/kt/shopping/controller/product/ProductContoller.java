@@ -16,12 +16,14 @@ import com.kt.shopping.common.SwaggerSupporter;
 import com.kt.shopping.dto.product.ProductRequest;
 import com.kt.shopping.service.product.ProductService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/products")
+@Tag(name="상품", description ="상품입니다.")
 public class ProductContoller extends SwaggerSupporter {
 	private final ProductService productService;
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -42,9 +44,9 @@ public class ProductContoller extends SwaggerSupporter {
 	){
 		productService.update(
 			id,
-			request.getName(),
-			request.getPrice(),
-			request.getQuantity()
+			request.name(),
+			request.price(),
+			request.quantity()
 		);
 		return ApiResult.ok();
 	}
