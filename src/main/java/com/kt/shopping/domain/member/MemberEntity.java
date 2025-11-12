@@ -60,4 +60,8 @@ import lombok.NoArgsConstructor;
 			this.gender =  member.gender();
 			this.birthday = member.birthday();
 	}
+
+	public void mapToOrder(OrderEntity order){
+		orders.add(order);
+	}
 }

@@ -12,7 +12,7 @@ import lombok.Getter;
 public class ApiResult<T> {
 	@JsonProperty("statuscode")
 	private String code;
-	@JsonIgnore
+	// @JsonIgnore
 	private String message;
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private T data;

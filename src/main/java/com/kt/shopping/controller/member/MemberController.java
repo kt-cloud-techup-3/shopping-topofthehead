@@ -52,7 +52,7 @@ public class MemberController extends SwaggerSupporter {
 		// HATEOAS 구현을 위한 EntityModel 생성
 		EntityModel<MemberResponse.Details> entityModel = EntityModel.of(memberreadresponse);
 		// 특정 Controller로 접근하는 하이퍼링크를 포함하는 링크객체 생성
-		WebMvcLinkBuilder linkToMember1 = linkTo(methodOn(MemberController.class).getAllMembers());
+		WebMvcLinkBuilder linkToMember1 = linkTo(methodOn(MemberController.class).search());
 		// EntityModel에 링크객체 추가
 		entityModel.add(linkToMember1.withRel("모든 멤버 조회"));
 		// 계정과 하이퍼링크를 포함하는 EntityModel 반환
@@ -60,7 +60,7 @@ public class MemberController extends SwaggerSupporter {
 	}
 	@GetMapping("/")
 	@ResponseStatus(HttpStatus.OK)
-	public List<MemberResponse.Details> getAllMembers(){
+	public List<MemberResponse.Details> search(){
 		// 모든 계정  가져오기
 		return memberservice.getAllMembers();
 	}

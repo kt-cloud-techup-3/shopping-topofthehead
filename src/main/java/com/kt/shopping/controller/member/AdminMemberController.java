@@ -22,6 +22,7 @@ import com.kt.shopping.dto.member.MemberRequest;
 import com.kt.shopping.dto.member.MemberResponse;
 import com.kt.shopping.service.member.MemberServiceImpl;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
@@ -38,10 +39,13 @@ public class AdminMemberController extends SwaggerSupporter {
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	public Page<MemberEntity> search(
-		Paging paging,
+		// @RequestParams 를 통해 Controller로 전달되는 page, size를 해당 객체로 Mapping
+		@Parameter(hidden=true) Paging paging,
 		@RequestParam(required = false) String keyword
 	){
-		Pageable pageable = PageRequest.of(paging.page()-1 , paging.size());
+		// Paging 객체 내부에서 수신된 page, size를 기반으로
+		// Pageable객체를 생성하여 반환
+		Pageable pageable = paging.toPageable();
 		return memberservice.searchAll(pageable, keyword);
 	}
 
