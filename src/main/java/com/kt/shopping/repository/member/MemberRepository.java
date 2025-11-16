@@ -19,6 +19,8 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
 	}
 	List<MemberEntity> findAll();
 
+	Optional<MemberEntity> findByName(String name);
+
 	Optional<MemberEntity> findById(Long id);
 
 	// JPQL 방식
@@ -32,6 +34,7 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
 		SELECT EXISTS (SELECT * FROM Member WHERE id = ?1);
 	""",nativeQuery = true)
 	Boolean existsByIdByNativeSQL(String id);
+
 
 	Page<MemberEntity> findAllByNameContaining(String name, Pageable pageable);
 }

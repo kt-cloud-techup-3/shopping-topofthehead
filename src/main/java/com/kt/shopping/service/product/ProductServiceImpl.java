@@ -16,7 +16,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public void create(String name, Long price, Long quantity) {
 		productRepository.save(
-			new ProductEntity(name, price, quantity)
+			ProductEntity.of(name, price, quantity)
 		);
 	}
 	@Override

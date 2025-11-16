@@ -5,7 +5,10 @@ import java.time.LocalDateTime;
 import com.kt.shopping.domain.order.OrderStatus;
 import com.querydsl.core.annotations.QueryProjection;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public interface OrderResponse {
+	@Schema(name = "OrderResponse.Search")
 	record Search(
 		Long id,
 		String receiverName,
