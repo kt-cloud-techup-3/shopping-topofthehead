@@ -3,7 +3,10 @@ package com.kt.shopping.domain.member;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
 
 import jakarta.persistence.Enumerated;
 
@@ -40,7 +43,7 @@ import lombok.NoArgsConstructor;
 
 	// Entity의 @Id Field는 @GeneratedValue에 의해 자동할당되므로 생성자로 할당하지않고 Null로 설정
 	public MemberEntity(String loginId, String password, String name, String email, String mobile, Gender gender,
-		LocalDate birthday, LocalDateTime createdAt, LocalDateTime updatedAt) {
+		LocalDate birthday) {
 		this.loginId = loginId;
 		this.password = password;
 		this.name = name;
@@ -64,4 +67,5 @@ import lombok.NoArgsConstructor;
 	public void mapToOrder(OrderEntity order){
 		orders.add(order);
 	}
+
 }

@@ -1,11 +1,18 @@
 package com.kt.shopping.service.order;
 
+import java.util.concurrent.TimeUnit;
+
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kt.shopping.common.CustomException;
 import com.kt.shopping.common.ErrorCode;
+import com.kt.shopping.common.Lock;
 import com.kt.shopping.common.Paging;
 import com.kt.shopping.common.PreValidCondition;
 import com.kt.shopping.domain.order.Receiver;
@@ -29,6 +36,7 @@ public class OrderServiceImpl implements OrderService{
 	private final OrderRepository orderRepository;
 	private final OrderProductRepository orderProductRepository;
 	@Override
+	@Lock(key = Lock.Key.STOCK, waitTime = 500L, leaseTime = 700L, timeunit =  TimeUnit.MILLISECONDS)
 	public void create(
 		Long userId,
 		Long prodId,
@@ -37,14 +45,13 @@ public class OrderServiceImpl implements OrderService{
 		String receiverMobile,
 		Long quantity
 	){
+		// DB 상호작용
 		var product = productRepository.findByIdOrThrowNotFound(prodId);
-
 		// 재고 검증
 		PreValidCondition.validate(
 			product.canProvide(quantity)
 			, ErrorCode.NOT_ENOUGH_STOCK
 		);
-
 		var member = memberRepository.findMemberByIdOrThrowNotFound(userId);
 		var receiver = new Receiver(receiverName, receiverAddress, receiverMobile);
 		var order = orderRepository.save(OrderEntity.of(receiver,member));
@@ -57,4 +64,5 @@ public class OrderServiceImpl implements OrderService{
 	public Page<OrderResponse.Search> search(Pageable pageable,String keyword){
 		return orderRepository.search(keyword,pageable);
 	}
+
 }

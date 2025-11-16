@@ -34,9 +34,7 @@ public class MemberServiceImpl implements MemberService {
 			request.email(),
 			request.mobile(),
 			request.gender(),
-			request.birthday(),
-			LocalDateTime.now(),
-			LocalDateTime.now()
+			request.birthday()
 		);
 		memberRepository.save(member);
 	}

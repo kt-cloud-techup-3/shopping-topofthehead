@@ -6,6 +6,8 @@ spring:
     username: root
     password: ${PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 100
   jpa:
     hibernate:
       ddl-auto: update
@@ -16,6 +18,10 @@ spring:
         jdbc:
           time_zone: Asia/Seoul
     show_sql: true
+  data:
+    redis:
+      host: ${redis.host:localhost}
+      port: ${redis.host:6379}
 # 해당 환경변수는 비밀번호이므로 yml에 저장하면 안되고
 # 따로 Edit Configuration - Environment Variable에서 PASSWORD:1234로 지정
 PASSWORD: 1234
