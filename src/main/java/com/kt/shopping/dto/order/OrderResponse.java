@@ -1,5 +1,6 @@
 package com.kt.shopping.dto.order;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 import com.kt.shopping.domain.order.OrderStatus;
@@ -16,7 +17,7 @@ public interface OrderResponse {
 		Long quantity,
 		Long totalPrice,
 		OrderStatus status,
-		LocalDateTime createdAt
+		Instant createdAt
 	) {
 		@QueryProjection
 		public Search {

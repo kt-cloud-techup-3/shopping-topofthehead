@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,12 +26,13 @@ import lombok.RequiredArgsConstructor;
 @Transactional	 // 트랜잭션의 원자성 보장
 public class MemberServiceImpl implements MemberService {
 	private final MemberRepository memberRepository;
+	private final PasswordEncoder passwordEncoder;
 	// 계정 생성
 	@Override
 	public void createMember(MemberRequest.Create request){
-		var member = new MemberEntity(
+		var member = MemberEntity.normalMember(
 			request.loginId(),
-			request.password(),
+			passwordEncoder.encode(request.password()),
 			request.name(),
 			request.email(),
 			request.mobile(),

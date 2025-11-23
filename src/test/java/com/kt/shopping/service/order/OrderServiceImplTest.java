@@ -61,7 +61,7 @@ class OrderServiceImplTest {
 		// 100개의 MemberEntity 객체 생성
 		for(int i = 0 ; i < 100 ; i++) {
 			memberList.add(
-				new MemberEntity(
+				MemberEntity.normalMember(
 					"로그인아이디" + i,
 					"a1234",
 					"테스터" + i,

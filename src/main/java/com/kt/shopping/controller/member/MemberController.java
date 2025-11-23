@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,9 +20,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import com.kt.shopping.common.ApiResult;
 import com.kt.shopping.common.SwaggerSupporter;
-import com.kt.shopping.domain.member.MemberEntity;
 import com.kt.shopping.dto.member.MemberRequest;
 import com.kt.shopping.dto.member.MemberResponse;
+import com.kt.shopping.security.DefaultCurrentUser;
 import com.kt.shopping.service.member.MemberServiceImpl;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -36,7 +37,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberController extends SwaggerSupporter {
 	private final MemberServiceImpl memberservice;
 	// localhost:8080/members/로 요청 시 해당 컨트롤러로 매핑
-	@PostMapping("/")
+	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ApiResult<Void> create(@Valid @RequestBody MemberRequest.Create request) {
 		// 계정생성
@@ -46,7 +47,8 @@ public class MemberController extends SwaggerSupporter {
 
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public EntityModel<MemberResponse.Details> getMember(@PathVariable Long id){
+	public EntityModel<MemberResponse.Details> getMember(
+		@PathVariable Long id){
 		// id에 해당하는 계정  가져오기
 		MemberResponse.Details memberreadresponse = memberservice.getMember(id);
 		// HATEOAS 구현을 위한 EntityModel 생성
@@ -60,7 +62,8 @@ public class MemberController extends SwaggerSupporter {
 	}
 	@GetMapping("/")
 	@ResponseStatus(HttpStatus.OK)
-	public List<MemberResponse.Details> search(){
+	public List<MemberResponse.Details> search(
+	){
 		// 모든 계정  가져오기
 		return memberservice.getAllMembers();
 	}
@@ -72,7 +75,13 @@ public class MemberController extends SwaggerSupporter {
 	// Query String이 꼭 필요하지 않는경우 @RequestParam(required = false) 설정
 	@GetMapping("/duplicate-id")
 	@ResponseStatus(HttpStatus.OK)
-	public ApiResult<Boolean> isDuplicateId(@RequestParam(required = false) Long id){
+	public ApiResult<Boolean> isDuplicateId(
+		@AuthenticationPrincipal DefaultCurrentUser defaultCurrentUser,
+		@RequestParam(required = false) Long id
+	){
+		System.out.println(defaultCurrentUser.getId());
+		System.out.println(defaultCurrentUser.getUsername());
+		System.out.println(defaultCurrentUser.getAuthorities());
 		// Reference Type인 경우 null을 포함가능 → primitive인 boolean이 아닌 RefereceType인 Boolean 사용
 		// 1화 29분 : Generics 사용 예정 및 Generics는 Reference Type만 사용가능하므로 사용
 		var result =  memberservice.isDuplicatedId(id);

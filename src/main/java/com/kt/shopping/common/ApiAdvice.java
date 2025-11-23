@@ -20,6 +20,7 @@ public class ApiAdvice {
 	// 가장 후순위로 예외를 처리하는 메서드
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ErrorData> internalServerError(Exception e){
+		e.printStackTrace();
 		return ApiAdvice.of(
 			HttpStatus.INTERNAL_SERVER_ERROR,
 			"에러입니다."

@@ -1,9 +1,9 @@
 package com.kt.shopping.controller.member;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +20,7 @@ import com.kt.shopping.common.SwaggerSupporter;
 import com.kt.shopping.domain.member.MemberEntity;
 import com.kt.shopping.dto.member.MemberRequest;
 import com.kt.shopping.dto.member.MemberResponse;
+import com.kt.shopping.security.DefaultCurrentUser;
 import com.kt.shopping.service.member.MemberServiceImpl;
 
 import io.swagger.v3.oas.annotations.Parameter;
@@ -39,6 +40,7 @@ public class AdminMemberController extends SwaggerSupporter {
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	public Page<MemberEntity> search(
+		@AuthenticationPrincipal DefaultCurrentUser defaultCurrentUser,
 		// @RequestParams 를 통해 Controller로 전달되는 page, size를 해당 객체로 Mapping
 		@Parameter(hidden=true) Paging paging,
 		@RequestParam(required = false) String keyword

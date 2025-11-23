@@ -9,8 +9,6 @@ public interface OrderRequest {
 	@Schema(name="OrderRequest.Create")
 	record Create(
 		@NotNull
-		Long userId,
-		@NotNull
 		Long prodId,
 		@NotNull
 		@Min(1)

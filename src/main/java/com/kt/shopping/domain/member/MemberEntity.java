@@ -1,9 +1,11 @@
 package com.kt.shopping.domain.member;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -36,14 +38,18 @@ import lombok.NoArgsConstructor;
 		private String mobile;
 		@Enumerated(EnumType.STRING)
 		private Gender gender;
+
+		@Enumerated(EnumType.STRING)
+		private Role role;
+
 		private LocalDate birthday;
 
 		@OneToMany(mappedBy="member")
 		private List<OrderEntity> orders = new ArrayList<>();
 
 	// Entity의 @Id Field는 @GeneratedValue에 의해 자동할당되므로 생성자로 할당하지않고 Null로 설정
-	public MemberEntity(String loginId, String password, String name, String email, String mobile, Gender gender,
-		LocalDate birthday) {
+	private MemberEntity(String loginId, String password, String name, String email, String mobile, Gender gender,
+		LocalDate birthday, Role role) {
 		this.loginId = loginId;
 		this.password = password;
 		this.name = name;
@@ -51,10 +57,40 @@ import lombok.NoArgsConstructor;
 		this.mobile = mobile;
 		this.gender = gender;
 		this.birthday = birthday;
+		this.role = role;
 	}
+
+	public static MemberEntity normalMember(String loginId, String password, String name, String email, String mobile,
+		Gender gender, LocalDate birthday){
+		return new MemberEntity(
+			loginId,
+			password,
+			name,
+			email,
+			mobile,
+			gender,
+			birthday,
+			Role.MEMBER
+		);
+	}
+
+		public static MemberEntity adminMember(String loginId, String password, String name, String email, String mobile,
+			Gender gender, LocalDate birthday){
+			return new MemberEntity(
+				loginId,
+				password,
+				name,
+				email,
+				mobile,
+				gender,
+				birthday,
+				Role.ADMIN
+			);
+		}
+
 	public void updatePassword(String password){
 		this.password = password;
-		updatedAt = LocalDateTime.now();
+		updatedAt = Instant.now();
 	}
 	public void updateContent(MemberRequest.Update member){
 			this.name = member.name();

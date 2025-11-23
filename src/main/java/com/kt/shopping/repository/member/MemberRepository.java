@@ -13,11 +13,18 @@ import com.kt.shopping.common.ErrorCode;
 import com.kt.shopping.domain.member.MemberEntity;
 
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
+	Optional<MemberEntity> findByLoginId(String loginId);
+	default MemberEntity findByLoginIdOrThrow(String loginId){
+		return findByLoginId(loginId).orElseThrow(()-> new CustomException(ErrorCode.FAIL_LOGIN));
+	}
+
 	// 에러 발생
 	default MemberEntity findMemberByIdOrThrowNotFound(Long id){
 		return findById(id).orElseThrow((()-> new CustomException(ErrorCode.NOT_FOUND_USER)));
 	}
 	List<MemberEntity> findAll();
+
+
 
 	Optional<MemberEntity> findByName(String name);
 
