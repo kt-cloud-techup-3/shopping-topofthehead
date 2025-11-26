@@ -1,26 +1,40 @@
-package com.kt.shopping.common;
+package com.kt.shopping.common.exception;
 
 import java.util.Arrays;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.kt.shopping.common.Exceptions;
+import com.kt.shopping.common.MessageEvent;
+
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 // 어플리케이션 전역적으로 API에서 발생하는 예외를 가져온다.
 // 각 @ExceptionHandler에서 지정된 예외를 처리
+@Slf4j
 @Hidden
 @RestControllerAdvice
+@RequiredArgsConstructor
 public class ApiAdvice {
+	private final ApplicationEventPublisher applicationEventPublisher;
 	// 가장 후순위로 예외를 처리하는 메서드
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ErrorData> internalServerError(Exception e){
-		e.printStackTrace();
+		log.error(Exceptions.simplify(e));
+		applicationEventPublisher.publishEvent(
+			new MessageEvent(
+				Exceptions.simplify(e)
+			)
+		);
 		return ApiAdvice.of(
 			HttpStatus.INTERNAL_SERVER_ERROR,
 			"에러입니다."

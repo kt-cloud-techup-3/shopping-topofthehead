@@ -5,14 +5,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kt.shopping.common.CustomException;
+import com.kt.shopping.common.exception.CustomException;
 import com.kt.shopping.common.ErrorCode;
 import com.kt.shopping.domain.member.MemberEntity;
 import com.kt.shopping.repository.member.MemberRepository;
 import com.kt.shopping.security.JwtService;
 import com.kt.shopping.security.PojoJwtProperties;
 
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @Service

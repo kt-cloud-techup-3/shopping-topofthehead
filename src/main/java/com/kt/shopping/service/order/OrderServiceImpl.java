@@ -2,24 +2,20 @@ package com.kt.shopping.service.order;
 
 import java.util.concurrent.TimeUnit;
 
-import org.redisson.api.RLock;
-import org.redisson.api.RedissonClient;
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kt.shopping.common.CustomException;
+import com.kt.shopping.aspect.ServiceLogger;
 import com.kt.shopping.common.ErrorCode;
 import com.kt.shopping.common.Lock;
-import com.kt.shopping.common.Paging;
 import com.kt.shopping.common.PreValidCondition;
+import com.kt.shopping.domain.history.HistoryType;
 import com.kt.shopping.domain.order.Receiver;
 import com.kt.shopping.domain.orderproduct.OrderProductEntity;
 import com.kt.shopping.dto.order.OrderResponse;
 import com.kt.shopping.repository.member.MemberRepository;
-import com.kt.shopping.repository.order.OrderRepositoryCustom;
 import com.kt.shopping.repository.orderproduct.OrderProductRepository;
 import com.kt.shopping.repository.order.OrderRepository;
 import com.kt.shopping.repository.product.ProductRepository;
@@ -46,7 +42,7 @@ public class OrderServiceImpl implements OrderService{
 		Long quantity
 	){
 		// DB 상호작용
-		var product = productRepository.findByIdOrThrowNotFound(prodId);
+		var product = productRepository.findByIdOrThrow(prodId);
 		// 재고 검증
 		PreValidCondition.validate(
 			product.canProvide(quantity)

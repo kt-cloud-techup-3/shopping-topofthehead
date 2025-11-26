@@ -1,6 +1,5 @@
-package com.kt.shopping.common;
+package com.kt.shopping.common.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

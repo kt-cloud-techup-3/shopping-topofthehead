@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.kt.shopping.common.CustomException;
+import com.kt.shopping.common.exception.CustomException;
 import com.kt.shopping.common.ErrorCode;
 import com.kt.shopping.domain.member.MemberEntity;
 

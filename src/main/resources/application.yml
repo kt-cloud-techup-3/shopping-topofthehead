@@ -2,7 +2,7 @@ spring:
   application:
     name: shopping
   datasource:
-    url: jdbc:mysql://localhost:3306/testdb
+    url: ${DBURL:jdbc:mysql://localhost:3306/testdb}
     username: root
     password: ${PASSWORD:1234}
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -10,7 +10,7 @@ spring:
       maximum-pool-size: 100
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     properties:
       hibernate:
         format_sql: true
@@ -29,3 +29,11 @@ jwt:
   keyId: ${ketId:TopOfTheHeadKey}
   accessTokenExpiration: ${accssTokenMinute:5}
   refreshTokenExpiration: ${refreshTokenMinute:720}
+
+server:
+  port: 8081
+
+
+slack:
+  bot-token: ${slack.token:xoxb-9833517009622-9993386658897-qKl07Pqd2EBfIUxXcsMxi1vp}
+  log-channel: ${slack.logchann:C09V7AQEHR7}

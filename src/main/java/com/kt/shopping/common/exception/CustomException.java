@@ -1,6 +1,8 @@
-package com.kt.shopping.common;
+package com.kt.shopping.common.exception;
 
 import org.springframework.http.HttpStatus;
+
+import com.kt.shopping.common.ErrorCode;
 
 import lombok.Getter;
 

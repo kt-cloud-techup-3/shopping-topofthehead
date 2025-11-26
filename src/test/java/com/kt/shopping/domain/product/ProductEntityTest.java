@@ -8,7 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import com.kt.shopping.common.CustomException;
+import com.kt.shopping.common.exception.CustomException;
 
 class ProductEntityTest {
 

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
-import com.kt.shopping.common.ApiResult;
+import com.kt.shopping.common.response.ApiResult;
 import com.kt.shopping.common.SwaggerSupporter;
 import com.kt.shopping.dto.member.MemberRequest;
 import com.kt.shopping.dto.member.MemberResponse;

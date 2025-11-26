@@ -7,7 +7,6 @@ import org.apache.logging.log4j.util.Strings;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kt.shopping.common.BaseEntity;
-import com.kt.shopping.common.CustomException;
 import com.kt.shopping.common.ErrorCode;
 import com.kt.shopping.common.PreValidCondition;
 import com.kt.shopping.domain.orderproduct.OrderProductEntity;
@@ -31,7 +30,7 @@ public class ProductEntity extends BaseEntity {
 	private Long stock;
 	@Enumerated(EnumType.STRING)
 	// 상품 초기설정
-	private ProductStatus status = ProductStatus.ACTIVATIVED;
+	private ProductStatus status = ProductStatus.ACTIVATED;
 	// 낙관적락
 	@JsonIgnore
 	@Version
@@ -70,7 +69,7 @@ public class ProductEntity extends BaseEntity {
 	}
 	// 상태변경 : 판매중
 	public void Acivate(){
-		this.status = ProductStatus.ACTIVATIVED;
+		this.status = ProductStatus.ACTIVATED;
 	}
 	// 상태변경 : 삭제
 	// 논리적으로 삭제된 상태로 지정하며 실제 DB Entity는 삭제되지 않음.

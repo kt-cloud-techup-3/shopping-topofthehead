@@ -6,10 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kt.shopping.common.ApiResult;
+import com.kt.shopping.common.response.ApiResult;
 import com.kt.shopping.common.Paging;
 import com.kt.shopping.common.SwaggerSupporter;
-import com.kt.shopping.domain.order.OrderEntity;
 import com.kt.shopping.dto.order.OrderResponse;
 import com.kt.shopping.service.order.OrderService;
 

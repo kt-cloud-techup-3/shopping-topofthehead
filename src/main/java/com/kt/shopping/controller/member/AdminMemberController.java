@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kt.shopping.common.ApiResult;
+import com.kt.shopping.common.response.ApiResult;
 import com.kt.shopping.common.Paging;
 import com.kt.shopping.common.SwaggerSupporter;
 import com.kt.shopping.domain.member.MemberEntity;

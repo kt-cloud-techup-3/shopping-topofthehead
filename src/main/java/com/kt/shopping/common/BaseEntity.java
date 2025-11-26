@@ -23,11 +23,11 @@ public abstract class BaseEntity {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	protected Long id;
 	@CreatedDate
-	@Column(name="CREATEDAT", nullable = false, updatable = false)
+	@Column(name="CREATEDAT")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Instant createdAt;
 	@LastModifiedDate
-	@Column(name="UPDATEDAT" , nullable = false)
+	@Column(name="UPDATEDAT")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Instant updatedAt;
 }

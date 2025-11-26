@@ -6,9 +6,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kt.shopping.common.ApiResult;
+import com.kt.shopping.aspect.ServiceLogger;
+import com.kt.shopping.common.response.ApiResult;
 import com.kt.shopping.common.SwaggerSupporter;
+import com.kt.shopping.domain.history.HistoryType;
 import com.kt.shopping.dto.order.OrderRequest;
+import com.kt.shopping.security.CurrentUser;
 import com.kt.shopping.security.DefaultCurrentUser;
 import com.kt.shopping.service.order.OrderService;
 
@@ -24,12 +27,13 @@ public class OrderController extends SwaggerSupporter {
 	private final OrderService orderService;
 
 	@PostMapping
+	@ServiceLogger(type = HistoryType.ORDER_CREATE, content = "주문생성")
 	public ApiResult<Void> create(
-		@AuthenticationPrincipal DefaultCurrentUser defaultCurrentUser, // Spring Security 를 통해 획득
+		@AuthenticationPrincipal CurrentUser currentUser, // Spring Security 를 통해 획득
 		@RequestBody @Valid OrderRequest.Create request
 	){
 		orderService.create(
-			defaultCurrentUser.getId(), //
+			currentUser.getId(), //
 			request.prodId(),
 			request.receiverName(),
 			request.receiverAddress(),
