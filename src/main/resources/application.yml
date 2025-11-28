@@ -33,7 +33,3 @@ jwt:
 server:
   port: 8083
 
-
-#slack:
-#  bot-token: ${slack.token:xoxb-9833517009622-9993386658897-qKl07Pqd2EBfIUxXcsMxi1vp}
-#  log-channel: ${slack.logchann:C09V7AQEHR7}
